@@ -1,2 +1,4 @@
-package vn.edu.iuh.fit.backend.repositories;public interface OrderRepository {
+package vn.edu.iuh.fit.backend.repositories;
+
+public interface OrderRepository {
 }

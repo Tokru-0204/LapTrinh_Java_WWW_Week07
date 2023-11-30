@@ -1,2 +1,4 @@
-package vn.edu.iuh.fit.backend.repositories;public interface CustomerRepository {
+package vn.edu.iuh.fit.backend.repositories;
+
+public interface CustomerRepository {
 }
