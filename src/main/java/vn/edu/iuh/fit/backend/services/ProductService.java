@@ -10,12 +10,13 @@ import vn.edu.iuh.fit.backend.models.Product;
 import vn.edu.iuh.fit.backend.repositories.ProductRepository;
 
 @Service
-public class ProductServices {
+public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
     public Page<Product> findPaginated(int pageNo, int pageSize, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(pageNo, pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         return productRepository.findAll(pageable);
     }
 }

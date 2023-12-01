@@ -3,21 +3,23 @@ package vn.edu.iuh.fit.backend.models;
 import jakarta.persistence.*;
 import vn.edu.iuh.fit.backend.enums.ProductStatus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
 @NamedQueries(value = {
         @NamedQuery(name = "Product.findAll", query = "select p from Product p where p.status = ?1"),
-        @NamedQuery(name = "Product.findById", query = "select p from Product p where p.product_id = ?1")
+        @NamedQuery(name = "Product.findById", query = "select p from Product p where p.productId = ?1")
         //,...1
 })
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private long product_id;
+    private long productId;
     @Column(name = "name", length = 150, nullable = false)
     private String name;
 
@@ -32,12 +34,12 @@ public class Product {
     @Column(name = "status")
     private ProductStatus status;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> productImageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails = new ArrayList<>();
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductPrice> productPrices = new ArrayList<>();
 
     public Product() {
@@ -52,11 +54,11 @@ public class Product {
     }
 
     public long getProduct_id() {
-        return product_id;
+        return productId;
     }
 
     public void setProduct_id(long id) {
-        this.product_id = id;
+        this.productId = id;
     }
 
     public String getName() {
@@ -126,14 +128,26 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + product_id +
+                "productId=" + productId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", unit='" + unit + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", status=" + status +
+                ", productImageList=" + productImageList +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return productId == product.productId;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId);
+    }
 }

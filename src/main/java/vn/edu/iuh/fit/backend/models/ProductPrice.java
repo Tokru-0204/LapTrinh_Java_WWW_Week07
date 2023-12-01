@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import vn.edu.iuh.fit.backend.pks.ProductPricePK;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product_price")
@@ -71,5 +72,18 @@ public class ProductPrice {
                 ", price=" + price +
                 ", note='" + note + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductPrice that = (ProductPrice) o;
+        return Objects.equals(price_date_time, that.price_date_time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price_date_time);
     }
 }
